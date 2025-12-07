@@ -9,7 +9,8 @@
   "license": "MIT",
   "repository": "https://github.com/gtamura17/tamuras-claude-code",
   "commands": [
-    "./commands/qa.md"
+    "./commands/qa.md",
+    "./commands/worktree.md"
   ],
   "agents": [
     "./agents/performance.md",
