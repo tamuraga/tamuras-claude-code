@@ -1,0 +1,29 @@
+{
+  "name": "tamuras-claude-code",
+  "version": "1.0.0",
+  "description": "Agentes e comandos para workflow Next.js + Supabase + TypeScript",
+  "author": {
+    "name": "Gabriel Tamura",
+    "github": "gabrieltamura"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/gtamura17/tamuras-claude-code",
+  "commands": [
+    "./commands/qa.md"
+  ],
+  "agents": [
+    "./agents/performance.md",
+    "./agents/security.md",
+    "./agents/responsive.md",
+    "./agents/visual-research.md"
+  ],
+  "keywords": [
+    "nextjs",
+    "supabase",
+    "typescript",
+    "performance",
+    "security",
+    "responsive",
+    "qa"
+  ]
+}
