@@ -4,14 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Plugin privado para Claude Code com agentes e comandos especializados para workflow Next.js + Supabase + TypeScript.
+Plugin privado para Claude Code com agentes especializados para workflow Next.js + Supabase + TypeScript.
 
 ## Estrutura
 
 ```
 .claude-plugin/marketplace.json  # Configuracao do marketplace local
 plugins/tamuras-claude-code/
-  commands/                      # Slash commands (.md)
   agents/                        # Agentes especializados (.md)
   hooks/                         # Scripts para hooks
 ```
@@ -20,26 +19,61 @@ plugins/tamuras-claude-code/
 
 **Marketplace local** em `.claude-plugin/marketplace.json` referencia plugins em `plugins/`.
 
-**Comandos** (`commands/*.md`):
-- Frontmatter YAML com `name`, `description`
-- Corpo define o prompt expandido ao executar `/comando`
-
 **Agentes** (`agents/*.md`):
 - Frontmatter com `name`, `description`, `tools`, `model`
 - Corpo define persona, workflow e output format
 - Invocados automaticamente via Task tool quando prompt do usuario match description
 
-## Componentes
+## Agentes (11 total)
 
-| Tipo | Nome | Trigger |
-|------|------|---------|
-| Comando | `/qa` | QA checklist adaptativo |
-| Comando | `/worktree` | Gerencia git worktrees |
-| Comando | `/gen-context` | Gera docs/ai-context/ para otimizar tokens |
-| Agente | `performance` | "audit performance", "lighthouse" |
-| Agente | `security` | "security audit", "OWASP", "RLS" |
-| Agente | `responsive` | "check mobile", "responsividade" |
-| Agente | `visual-research` | "pesquisa visual", "moodboard" |
+### Development (Build)
+| Nome | Trigger | Funcao |
+|------|---------|--------|
+| `fullstack-builder` | "build feature", "criar feature" | Implementa features end-to-end (DB → API → UI) |
+| `db-architect` | "database", "migration", "schema" | Migrations seguras, RLS, performance |
+
+### Quality (Review)
+| Nome | Trigger | Funcao |
+|------|---------|--------|
+| `code-reviewer` | "review code", "revisar PR" | Review 5D: arch, security, perf, tests, reliability |
+| `prompt-optimizer` | "optimize prompts", "melhorar prompts" | Analisa falhas LLM, melhora CLAUDE.md |
+
+### Auditoria
+| Nome | Trigger |
+|------|---------|
+| `performance` | "audit performance", "lighthouse" |
+| `security` | "security audit", "OWASP", "RLS", "AI guardrails" |
+| `responsive` | "check mobile", "responsividade" |
+| `visual-research` | "pesquisa visual", "moodboard" |
+
+### Testing (Pipeline de 3 Agents)
+| Nome | Trigger | Funcao |
+|------|---------|--------|
+| `test-planner` | "plan tests", "mapear jornadas" | Explora app, gera plano em Markdown |
+| `test-runner` | "run tests", "executar testes" | Executa jornadas, valida UI + DB |
+| `test-healer` | "fix tests", "heal tests" | Auto-repara testes quebrados |
+
+### Fluxo Completo de Desenvolvimento
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. BUILD                                                   │
+│     fullstack-builder → Implementa feature                  │
+│     db-architect → Cria migrations                          │
+├─────────────────────────────────────────────────────────────┤
+│  2. REVIEW                                                  │
+│     code-reviewer → Review multi-dimensional                │
+│     security → Audit de seguranca + AI guardrails           │
+├─────────────────────────────────────────────────────────────┤
+│  3. TEST                                                    │
+│     test-planner → Gera plano                               │
+│     test-runner → Executa, valida UI + DB                   │
+│     test-healer → Auto-repara falhas                        │
+├─────────────────────────────────────────────────────────────┤
+│  4. OPTIMIZE                                                │
+│     performance → Audit de performance                      │
+│     prompt-optimizer → Melhora prompts/CLAUDE.md            │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ## Filosofia
 
@@ -54,18 +88,6 @@ plugins/tamuras-claude-code/
 ```bash
 /plugin marketplace add /home/gabrieltamura/Apps/active/tamuras-claude-code
 /plugin install tamuras-claude-code
-```
-
-## Adicionando Novos Comandos
-
-Criar `plugins/tamuras-claude-code/commands/nome.md`:
-```markdown
----
-name: nome
-description: Descricao curta para o registro
----
-
-Prompt expandido aqui...
 ```
 
 ## Adicionando Novos Agentes
@@ -99,10 +121,7 @@ Agentes leem automaticamente:
 3. Docs relevantes (`docs/arquitetura/`, `docs/setup/`)
 
 ### Projetos sem docs/ estruturado (fallback)
-```bash
-/gen-context
-```
-Cria `docs/ai-context/project-structure.md` e `docs-overview.md`
+Agentes tentam ler `docs/ai-context/project-structure.md` e `docs/ai-context/docs-overview.md` se existirem.
 
 ### Hook opcional
 Em `settings.local.json` do projeto:

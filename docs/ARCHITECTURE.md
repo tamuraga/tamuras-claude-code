@@ -1,10 +1,10 @@
 # Architecture
 
-**Gerado em:** 2025-12-08 13:45:00
+**Gerado em:** 2026-01-08 12:00:00
 
 ## Overview
 
-Plugin privado para Claude Code com agentes e comandos especializados.
+Plugin privado para Claude Code com 11 agentes especializados para workflow Next.js + Supabase + TypeScript.
 
 ## Directory Structure
 
@@ -14,15 +14,20 @@ tamuras-claude-code/
 │   └── marketplace.json      # Registry local
 ├── plugins/
 │   └── tamuras-claude-code/
-│       ├── commands/         # Slash commands
-│       │   ├── qa.md
-│       │   ├── worktree.md
-│       │   └── gen-context.md
-│       ├── agents/           # Subagents especializados
+│       ├── .claude-plugin/
+│       │   └── plugin.json   # Configuracao do plugin
+│       ├── agents/           # 11 Subagents especializados
+│       │   ├── fullstack-builder.md
+│       │   ├── db-architect.md
+│       │   ├── code-reviewer.md
+│       │   ├── prompt-optimizer.md
 │       │   ├── performance.md
 │       │   ├── security.md
 │       │   ├── responsive.md
-│       │   └── visual-research.md
+│       │   ├── visual-research.md
+│       │   ├── test-planner.md
+│       │   ├── test-runner.md
+│       │   └── test-healer.md
 │       └── hooks/
 │           └── inject-context.sh
 ├── docs/
@@ -31,24 +36,56 @@ tamuras-claude-code/
 └── CLAUDE.md                 # Entry point para agentes
 ```
 
-## Components
+## Agents (11 total)
 
-### Commands (Slash)
+### Development (Build)
 
-| Command | Arquivo | Trigger |
-|---------|---------|---------|
-| `/qa` | commands/qa.md | QA checklist adaptativo |
-| `/worktree` | commands/worktree.md | Git worktrees |
-| `/gen-context` | commands/gen-context.md | Fallback para projetos sem docs |
+| Agent | Arquivo | Tools | Funcao |
+|-------|---------|-------|--------|
+| fullstack-builder | agents/fullstack-builder.md | Bash, Glob, Grep, Read, Write, Edit | Implementa features end-to-end (DB → API → UI) |
+| db-architect | agents/db-architect.md | Glob, Grep, Read, Write, Bash, Supabase MCP | Migrations seguras, RLS, performance |
 
-### Agents (Subagents)
+### Quality (Review)
 
-| Agent | Arquivo | Tools | Model |
-|-------|---------|-------|-------|
-| performance | agents/performance.md | Bash, Glob, Grep, Read, Write | sonnet |
-| security | agents/security.md | Glob, Grep, Read, Write | sonnet |
-| responsive | agents/responsive.md | Glob, Grep, Read, Write, Playwright | sonnet |
-| visual-research | agents/visual-research.md | WebSearch, WebFetch, Read, Write, Playwright | sonnet |
+| Agent | Arquivo | Tools | Funcao |
+|-------|---------|-------|--------|
+| code-reviewer | agents/code-reviewer.md | Glob, Grep, Read, Write, Bash | Review 5D: arch, security, perf, tests, reliability |
+| prompt-optimizer | agents/prompt-optimizer.md | Glob, Grep, Read, Write | Analisa falhas LLM, melhora CLAUDE.md |
+
+### Auditoria
+
+| Agent | Arquivo | Tools | Funcao |
+|-------|---------|-------|--------|
+| performance | agents/performance.md | Bash, Glob, Grep, Read, Write | Audit Core Web Vitals, bundle |
+| security | agents/security.md | Glob, Grep, Read, Write | OWASP, RLS, AI guardrails |
+| responsive | agents/responsive.md | Glob, Grep, Read, Write, Playwright | Breakpoints, touch, mobile |
+| visual-research | agents/visual-research.md | WebSearch, WebFetch, Read, Write, Playwright | Moodboards, referencias |
+
+### Testing Pipeline (Playwright + Supabase MCP)
+
+| Agent | Arquivo | Tools | Funcao |
+|-------|---------|-------|--------|
+| test-planner | agents/test-planner.md | Glob, Grep, Read, Write, Playwright, Supabase | Explora app, gera plano de testes |
+| test-runner | agents/test-runner.md | Bash, Glob, Grep, Read, Write, Playwright, Supabase | Executa jornadas, valida UI + DB |
+| test-healer | agents/test-healer.md | Glob, Grep, Read, Write, Playwright, Supabase | Auto-repara testes quebrados |
+
+### Testing Pipeline Flow
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  test-planner   │────▶│   test-runner   │────▶│   test-healer   │
+│                 │     │                 │     │                 │
+│ - Explora app   │     │ - Executa specs │     │ - Analisa falhas│
+│ - Identifica    │     │ - Valida UI+DB  │     │ - Propoe fixes  │
+│   jornadas      │     │ - Screenshots   │     │ - Auto-repara   │
+│ - Gera plano MD │     │ - Gera report   │     │ - Re-valida     │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+        │                       │                       │
+        ▼                       ▼                       ▼
+  test-plans/            audits/testing/         audits/healing/
+  [feature]/             [role]/                 YYYY-MM-DD.md
+  YYYY-MM-DD.md          YYYY-MM-DD.md
+```
 
 ### Hooks
 
@@ -64,7 +101,6 @@ Usuario instala plugin
 /plugin marketplace add [path]
 /plugin install tamuras-claude-code
         ↓
-Commands registrados em /
 Agents disponiveis via Task tool
         ↓
 Usuario trigger ("audit performance")
@@ -78,11 +114,37 @@ Agent inicia com Pre-Context:
 Gera audit em audits/[tipo]/YYYY-MM-DD_HH-MM-SS.md
 ```
 
+## Fluxo Completo de Desenvolvimento
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. BUILD                                                   │
+│     fullstack-builder → Implementa feature (DB → API → UI) │
+│     db-architect → Cria migrations seguras + RLS            │
+├─────────────────────────────────────────────────────────────┤
+│  2. REVIEW                                                  │
+│     code-reviewer → Review 5D (arch, sec, perf, test, rel) │
+│     security → Audit OWASP + AI guardrails                  │
+├─────────────────────────────────────────────────────────────┤
+│  3. TEST                                                    │
+│     test-planner → Gera plano de jornadas                   │
+│     test-runner → Executa, valida UI + DB                   │
+│     test-healer → Auto-repara falhas                        │
+├─────────────────────────────────────────────────────────────┤
+│  4. OPTIMIZE                                                │
+│     performance → Audit Core Web Vitals                     │
+│     prompt-optimizer → Melhora prompts/CLAUDE.md            │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ## Design Decisions
 
 | Decisao | Razao |
 |---------|-------|
 | Agentes consultivos | Usuario aprova antes de executar fixes |
 | Pre-Context obrigatorio | Reduz tokens evitando glob/grep redundantes |
-| Fallback gen-context | Suporta projetos sem docs estruturado |
+| Fallback ai-context | Suporta projetos sem docs estruturado |
 | Timestamp no filename | Permite multiplas audits por dia |
+| Fullstack vs separado | Backend + Frontend juntos reduz problemas de integracao |
+| 3 agents de teste | Separa responsabilidades: planejar, executar, corrigir |
+| Type-safe com Zod | Schema como single source of truth para tipos |
