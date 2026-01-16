@@ -1,38 +1,5 @@
 {
   "name": "tamuras-claude-code",
   "version": "1.0.0",
-  "description": "Agentes especializados para workflow Next.js + Supabase + TypeScript",
-  "author": {
-    "name": "Gabriel Tamura",
-    "github": "gabrieltamura"
-  },
-  "license": "MIT",
-  "repository": "https://github.com/gtamura17/tamuras-claude-code",
-  "agents": [
-    "./agents/project-starter.md",
-    "./agents/fullstack-builder.md",
-    "./agents/code-reviewer.md",
-    "./agents/security.md",
-    "./agents/performance.md",
-    "./agents/responsive.md",
-    "./agents/visual-research.md",
-    "./agents/test-planner.md",
-    "./agents/test-runner.md",
-    "./agents/test-healer.md"
-  ],
-  "keywords": [
-    "nextjs",
-    "supabase",
-    "typescript",
-    "performance",
-    "security",
-    "responsive",
-    "testing",
-    "e2e",
-    "qa",
-    "fullstack",
-    "ai",
-    "database",
-    "code-review"
-  ]
+  "description": "Agentes especializados para workflow Next.js + Supabase + TypeScript"
 }

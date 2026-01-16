@@ -24,27 +24,41 @@ plugins/tamuras-claude-code/
 - Corpo define persona, workflow e output format
 - Invocados automaticamente via Task tool quando prompt do usuario match description
 
-## Agentes (11 total)
+## Agentes (18 total)
 
 ### Development (Build)
-| Nome | Trigger | Funcao |
-|------|---------|--------|
-| `fullstack-builder` | "build feature", "criar feature" | Implementa features end-to-end (DB → API → UI) |
-| `db-architect` | "database", "migration", "schema" | Migrations seguras, RLS, performance |
+| Nome | Trigger | Funcao | Modelo |
+|------|---------|--------|--------|
+| `fullstack-builder` | "build feature", "criar feature" | Implementa features end-to-end (DB → API → UI) | Opus |
+| `frontend` | "frontend", "componente", "ui" | Cria componentes React + Tailwind + shadcn | Sonnet |
 
 ### Quality (Review)
-| Nome | Trigger | Funcao |
-|------|---------|--------|
-| `code-reviewer` | "review code", "revisar PR" | Review 5D: arch, security, perf, tests, reliability |
-| `prompt-optimizer` | "optimize prompts", "melhorar prompts" | Analisa falhas LLM, melhora CLAUDE.md |
+| Nome | Trigger | Funcao | Modelo |
+|------|---------|--------|--------|
+| `code-reviewer` | "review code", "revisar PR" | Review 5D: arch, security, perf, tests | Opus |
+| `code-reviewer-tester` | "review", "testes e2e", "smoke test" | Review + gera testes e2e/smoke | Sonnet |
+| `architecture` | "arquitetura", "estrutura" | Analisa e sugere melhorias arquiteturais | Sonnet |
+
+### Exploration & Planning
+| Nome | Trigger | Funcao | Modelo |
+|------|---------|--------|--------|
+| `codebase-explorer` | "explorar código", "mapear estrutura" | Explora codebase otimizado, usa Memento | Haiku |
+| `task-planner` | "quebrar tarefas", "task breakdown" | Quebra planos em tarefas executáveis | Sonnet |
+
+### Git & DevOps
+| Nome | Trigger | Funcao | Modelo |
+|------|---------|--------|--------|
+| `git` | "git", "commit", "push", "pr" | Git workflow (max 50 chars, sem Co-Authored-By) | Haiku |
+| `context-cleaner` | "limpar cache", "cleanup" | Limpa cache ~/.claude/ (debug, plans, todos) | Haiku |
 
 ### Auditoria
-| Nome | Trigger |
-|------|---------|
-| `performance` | "audit performance", "lighthouse" |
-| `security` | "security audit", "OWASP", "RLS", "AI guardrails" |
-| `responsive` | "check mobile", "responsividade" |
-| `visual-research` | "pesquisa visual", "moodboard" |
+| Nome | Trigger | Funcao |
+|------|---------|--------|
+| `performance` | "audit performance", "lighthouse" | Core Web Vitals, bundle size |
+| `security` | "security audit", "OWASP", "RLS" | OWASP Top 10, AI guardrails |
+| `responsive` | "check mobile", "responsividade" | Mobile-first, breakpoints |
+| `visual-research` | "pesquisa visual", "moodboard" | Moodboards, referências |
+| `visual-researcher` | "referências UI", "Dribbble" | Curadoria Dribbble/Behance/Figma |
 
 ### Testing (Pipeline de 3 Agents)
 | Nome | Trigger | Funcao |
@@ -86,7 +100,7 @@ plugins/tamuras-claude-code/
 ## Instalacao do Plugin
 
 ```bash
-/plugin marketplace add /home/gabrieltamura/Apps/active/tamuras-claude-code
+/plugin marketplace add /Users/eugtamura/Dev/tamuras-claude-code
 /plugin install tamuras-claude-code
 ```
 
