@@ -1,7 +1,7 @@
 {
   "name": "tamuras-claude-code",
   "version": "1.0.0",
-  "description": "Agentes especializados para workflow Next.js + Supabase + TypeScript",
+  "description": "4 skills + 10 agents para workflow Next.js + Supabase + TypeScript",
   "skills": "./skills/",
   "agents": "./agents/"
 }
