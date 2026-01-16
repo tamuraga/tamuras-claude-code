@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "description": "4 skills + 10 agents para workflow Next.js + Supabase + TypeScript",
   "skills": "./skills/",
+  "commands": "./commands/",
   "agents": "./agents/"
 }
