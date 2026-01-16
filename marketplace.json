@@ -1,0 +1,12 @@
+{
+  "name": "tamuras-marketplace",
+  "version": "1.0.0",
+  "description": "Marketplace de plugins do Tamura para Claude Code",
+  "plugins": [
+    {
+      "name": "tamuras-claude-code",
+      "path": "plugins/tamuras-claude-code",
+      "description": "Agentes especializados para workflow Next.js + Supabase + TypeScript"
+    }
+  ]
+}
