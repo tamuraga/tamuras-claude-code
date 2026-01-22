@@ -1,0 +1,41 @@
+# Handoff automático gerado antes de compactação
+# Projeto: hooks
+# Gerado: 2026-01-22 05:05:26
+
+project: hooks
+timestamp: "2026-01-22_05-05-26"
+session_id: "unknown"
+working_directory: "/Users/eugtamura/Dev/tamuras-claude-code/plugins/tamuras-claude-code/hooks"
+
+context:
+  last_files_modified:
+  - .mcp.json
+  - plugins/tamuras-claude-code/.claude-plugin/plugin.json
+  - plugins/tamuras-claude-code/agents/codebase-explorer.md
+  - plugins/tamuras-claude-code/agents/security.md
+  - plugins/tamuras-claude-code/hooks/README.md
+  - plugins/tamuras-claude-code/hooks/pretool-explorer.sh
+  - plugins/tamuras-claude-code/hooks/pretool-fetch.sh
+  - plugins/tamuras-claude-code/hooks/pretool-git.md
+  - plugins/tamuras-claude-code/hooks/pretool-git.sh
+  - plugins/tamuras-claude-code/hooks/pretool-playwright.sh
+
+  current_branch: "main"
+  last_commit: "b4972f7 feat: integrate claude-mem in codebase-explorer"
+
+decisions:
+  # Adicione decisões importantes aqui
+  - "(preencher manualmente)"
+
+next_steps:
+  # Próximos passos para continuar o trabalho
+  - "(preencher manualmente)"
+
+notes: |
+  Handoff automático gerado antes da compactação de contexto.
+
+  Para carregar este handoff em uma nova sessão:
+  1. Abra este arquivo
+  2. Cole o conteúdo no início da conversa
+
+  Ou use: /resume-handoff /Users/eugtamura/Dev/tamuras-claude-code/plugins/tamuras-claude-code/thoughts/handoffs/handoff-hooks-2026-01-22_05-05-26.yaml

@@ -3,7 +3,35 @@
   "$comment": "Exemplo de configuração para usar os hooks do tamuras-claude-code",
 
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "/path/to/tamuras-claude-code/hooks/statusline.sh"
+      }
+    ],
+
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "HOOK_EVENT=SessionStart /path/to/tamuras-claude-code/hooks/session-ledger.sh"
+      }
+    ],
+
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": "/path/to/tamuras-claude-code/hooks/precompact-handoff.sh"
+      }
+    ],
+
     "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-typescript.sh \"$TOOL_INPUT\""
+        }]
+      },
       {
         "matcher": "mcp__supabase__",
         "hooks": [{
@@ -38,6 +66,16 @@
         "hooks": [{
           "type": "command",
           "command": "/path/to/tamuras-claude-code/hooks/pretool-explorer.sh \"$TOOL_INPUT\""
+        }]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{
+          "type": "command",
+          "command": "HOOK_EVENT=PostToolUse /path/to/tamuras-claude-code/hooks/session-ledger.sh \"$TOOL_INPUT\""
         }]
       }
     ]
