@@ -1,7 +1,7 @@
 ---
 name: codebase-explorer
 description: Explora codebase de forma otimizada. Use para "explorar código", "explorar projeto", "entender projeto", "mapear estrutura", "onboarding".
-tools: Glob, Grep, Read, Write, Bash, mcp__memento__search_nodes, mcp__memento__read_graph, mcp__memento__create_entities
+tools: Glob, Grep, Read, Write, Bash, mcp__plugin_claude-mem_mcp-search__search, mcp__plugin_claude-mem_mcp-search__timeline, mcp__plugin_claude-mem_mcp-search__get_observations
 model: haiku
 ---
 
@@ -43,7 +43,7 @@ Usuário pode mudar modelo na sessão:
 
 ### Ordem de exploração:
 1. **Fase 0 - Git Context**: Histórico e mudanças recentes
-2. **Fase 1 - Memento**: Verificar contexto salvo do repositório
+2. **Fase 1 - claude-mem**: Verificar contexto salvo do projeto
 3. **Fase 2 - Docs**: Ler documentação existente ANTES de código
 4. **Fase 3 - Arquivos raiz**: package.json, tsconfig.json, CLAUDE.md
 5. **Fase 4 - Estrutura**: Listar apenas primeiro nível
@@ -71,12 +71,24 @@ git diff --name-only HEAD~5
 #### 0.3 Resumir
 Gerar seção no output com commits e arquivos modificados.
 
-### Fase 1: Contexto Memento
+### Fase 1: Contexto claude-mem
+
+#### 1.1 Buscar contexto existente
 ```
-mcp__memento__search_nodes(query: "nome-do-repositorio")
-mcp__memento__read_graph()
+mcp__plugin_claude-mem_mcp-search__search(query: "[nome-do-projeto]", project: "[nome-do-projeto]")
 ```
-Se existir contexto, resumir o que já sabemos.
+
+#### 1.2 Se encontrar resultados
+- Usar `get_observations(ids: [IDs encontrados])` para pegar detalhes
+- Resumir conhecimento prévio no output
+
+#### 1.3 Se NÃO encontrar resultados
+Exibir aviso no output:
+```
+⚠️ AVISO: Nenhum contexto encontrado para [projeto] no claude-mem.
+Esta é a primeira exploração deste projeto.
+Descobertas serão salvas automaticamente para futuras sessões.
+```
 
 ### Fase 2: Documentação Existente
 ```bash
@@ -97,13 +109,9 @@ Glob: **/*.{ts,tsx,js,jsx} (excluir node_modules)
 - Identificar estrutura de pastas (app/, src/, lib/)
 - Mapear dependências principais
 
-### Fase 5: Salvar no Memento
-Criar/atualizar entidades no Memento com:
-- Nome do repositório
-- Stack identificada
-- Estrutura de pastas
-- Padrões de código
-- Arquivos importantes
+### Fase 5: Contexto Automático
+O claude-mem salva automaticamente as descobertas desta sessão.
+Não é necessário chamar nenhuma tool de salvamento.
 
 ## Output Format
 
@@ -125,8 +133,8 @@ Gerar arquivo em `audits/exploration/YYYY-MM-DD_HH-MM.md`:
 - [arquivo]
 - ...
 
-## Contexto Memento
-[O que já sabíamos / Novo repositório]
+## Contexto claude-mem
+[O que já sabíamos / ⚠️ Primeira exploração - nenhum contexto encontrado]
 
 ## Documentação Existente
 [Lista de docs encontrados e resumo do conteúdo]
