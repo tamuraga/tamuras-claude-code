@@ -1,0 +1,61 @@
+{
+  "$schema": "https://claude.ai/code/settings.schema.json",
+  "$comment": "Exemplo de configuração para usar os hooks do tamuras-claude-code",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__supabase__",
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-supabase.sh"
+        }]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-git.sh \"$TOOL_INPUT\""
+        }]
+      },
+      {
+        "matcher": "WebFetch|WebSearch",
+        "once": true,
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-fetch.sh"
+        }]
+      },
+      {
+        "matcher": "mcp__playwright__",
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-playwright.sh \"$TOOL_INPUT\""
+        }]
+      },
+      {
+        "matcher": "Task",
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-explorer.sh \"$TOOL_INPUT\""
+        }]
+      }
+    ]
+  },
+
+  "permissions": {
+    "allow": [
+      "Bash(npm *)",
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(npx *)",
+      "Bash(pnpm *)",
+      "Bash(bun *)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(* --force *)",
+      "Bash(sudo *)"
+    ]
+  }
+}

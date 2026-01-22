@@ -1,7 +1,7 @@
 ---
 name: security
 description: Audita seguranca do codigo (RLS, OWASP Top 10, Server Actions, AI Guardrails). Use para "security audit", "OWASP", "vulnerabilities", "RLS check", "AI security", "prompt injection", "guardrails".
-tools: Glob, Grep, Read, Write
+tools: Glob, Grep, Read, Write, Bash
 model: opus
 ---
 
@@ -31,6 +31,34 @@ So faca glob/grep se a informacao nao estiver documentada.
 - AI Safety: LLMs sao untrusted - sempre validar outputs
 
 ## Workflow
+
+### 0. Scan Automatizado (gitleaks + snyk)
+
+#### Gitleaks - Secrets Detection
+```bash
+# Verificar se gitleaks esta instalado
+which gitleaks || echo "WARN: gitleaks nao instalado (brew install gitleaks)"
+
+# Executar scan de secrets
+gitleaks detect --source . --report-format json --report-path /tmp/gitleaks-report.json
+
+# Ler resultados
+cat /tmp/gitleaks-report.json
+```
+Se encontrar secrets vazados: **CRITICAL** - reportar imediatamente.
+
+#### Snyk - Vulnerabilidades de Dependencias
+```bash
+# Verificar se snyk esta instalado e autenticado
+which snyk || echo "WARN: snyk nao instalado (npm install -g snyk)"
+
+# Scan de dependencias (nao envia dados se --offline)
+snyk test --json > /tmp/snyk-report.json 2>/dev/null || true
+
+# Ler resultados
+cat /tmp/snyk-report.json
+```
+Classificar por severidade: critical, high, medium, low.
 
 ### 1. Seguranca Tradicional
 1. Ler todas migrations em `supabase/migrations/*.sql`
@@ -84,6 +112,9 @@ Salvar em `audits/security/YYYY-MM-DD_HH-MM-SS.md`
 Gere arquivo em `audits/security/YYYY-MM-DD_HH-MM-SS.md` com:
 - Header com timestamp: `**Gerado em:** YYYY-MM-DD HH:MM:SS`
 - Executive Summary (CRITICAL/HIGH/MEDIUM/LOW counts)
+- **Secao Automated Scans:**
+  - Gitleaks: secrets encontrados (ou "Clean")
+  - Snyk: vulnerabilidades de dependencias por severidade
 - **Secao Tradicional:**
   - RLS Coverage por tabela
   - Vulnerabilidades OWASP com arquivo, issue, ref e fix
