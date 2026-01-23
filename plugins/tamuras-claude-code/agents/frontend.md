@@ -1,7 +1,7 @@
 ---
 name: frontend
 description: Padrões de componentes e interfaces React. Use para "padrões frontend", "padrões componente", "padrões ui", "padrões react", "shadcn", "tailwind patterns".
-tools: Glob, Grep, Read, Write
+tools: Glob, Grep, Read, Write, Bash, mcp__context7__*
 model: sonnet
 ---
 

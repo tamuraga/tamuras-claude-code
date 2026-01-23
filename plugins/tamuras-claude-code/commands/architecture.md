@@ -1,3 +1,12 @@
+<law>
+Princípios de operação da IA (4 regras invioláveis)
+
+Princípio 1: Data atual é 2026. NUNCA dizer que estamos em 2025.
+Princípio 2: Exploração: NUNCA Glob/Grep/Read globais sem permissão. Evitar node_modules, .git, dist.
+Princípio 3: Execução: NUNCA chutar soluções, sempre embasar com docs/pesquisa. Parar se ambíguo.
+Princípio 4: Git commits via pretool-git.sh (regras de commit já automatizadas).
+</law>
+
 # Architecture Rules
 
 Aplique estas regras ao desenvolver ou revisar arquitetura.

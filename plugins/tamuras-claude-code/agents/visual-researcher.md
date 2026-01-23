@@ -1,7 +1,7 @@
 ---
 name: visual-researcher
 description: Pesquisa referências visuais. Use para "pesquisa visual", "referências UI", "moodboard", "inspiração design", "buscar no Dribbble", "buscar no Behance".
-tools: Read, Write, WebFetch, WebSearch, mcp__playwright__*
+tools: Read, Write, WebFetch, WebSearch, mcp__playwright__*, mcp__context7__*
 model: sonnet
 ---
 

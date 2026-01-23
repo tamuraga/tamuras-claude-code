@@ -1,0 +1,41 @@
+# Handoff automático gerado antes de compactação
+# Projeto: admin-standalone
+# Gerado: 2026-01-22 18:05:50
+
+project: admin-standalone
+timestamp: "2026-01-22_18-05-50"
+session_id: "unknown"
+working_directory: "/Users/eugtamura/Dev/Uncode/innovation-hub/admin-standalone"
+
+context:
+  last_files_modified:
+  - .gitignore
+  - app/(admin)/planning/settings/page.tsx
+  - app/(admin)/settings/members/components/apps-select.tsx
+  - app/(admin)/settings/members/components/member-form-modal.tsx
+  - app/(admin)/settings/members/components/permissions-modal.tsx
+  - app/(admin)/settings/members/page.tsx
+  - app/api/auth/me/route.ts
+  - app/api/nps/clients/[id]/route.ts
+  - app/api/nps/clients/[id]/scopes/[scopeId]/route.ts
+  - app/api/nps/clients/[id]/scopes/route.ts
+
+  current_branch: "main"
+  last_commit: "743bc0b fix: remove legacy *_users tables references"
+
+decisions:
+  # Adicione decisões importantes aqui
+  - "(preencher manualmente)"
+
+next_steps:
+  # Próximos passos para continuar o trabalho
+  - "(preencher manualmente)"
+
+notes: |
+  Handoff automático gerado antes da compactação de contexto.
+
+  Para carregar este handoff em uma nova sessão:
+  1. Abra este arquivo
+  2. Cole o conteúdo no início da conversa
+
+  Ou use: /resume-handoff /Users/eugtamura/.claude/plugins/marketplaces/gtamura17/tamuras-claude-code/plugins/tamuras-claude-code/thoughts/handoffs/handoff-admin-standalone-2026-01-22_18-05-50.yaml

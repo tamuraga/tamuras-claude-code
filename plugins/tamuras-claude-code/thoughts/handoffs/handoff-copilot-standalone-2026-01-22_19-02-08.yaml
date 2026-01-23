@@ -1,0 +1,41 @@
+# Handoff automático gerado antes de compactação
+# Projeto: copilot-standalone
+# Gerado: 2026-01-22 19:02:08
+
+project: copilot-standalone
+timestamp: "2026-01-22_19-02-08"
+session_id: "unknown"
+working_directory: "/Users/eugtamura/Dev/Uncode/innovation-hub/copilot-standalone"
+
+context:
+  last_files_modified:
+  - .gitignore
+  - .mcp.json
+  - app/(wiki)/layout.tsx
+  - app/(wiki)/wiki/[spaceSlug]/[pageSlug]/page.tsx
+  - app/(wiki-edit)/wiki-edit/[spaceSlug]/[pageSlug]/page.tsx
+  - app/api/wiki/pages/[id]/route.ts
+  - app/api/wiki/pages/route.ts
+  - components/chat/chat-interface.tsx
+  - components/chat/input-box.tsx
+  - components/chat/message-item.tsx
+
+  current_branch: "main"
+  last_commit: "35b5a6b fix: chat improved"
+
+decisions:
+  # Adicione decisões importantes aqui
+  - "(preencher manualmente)"
+
+next_steps:
+  # Próximos passos para continuar o trabalho
+  - "(preencher manualmente)"
+
+notes: |
+  Handoff automático gerado antes da compactação de contexto.
+
+  Para carregar este handoff em uma nova sessão:
+  1. Abra este arquivo
+  2. Cole o conteúdo no início da conversa
+
+  Ou use: /resume-handoff /Users/eugtamura/.claude/plugins/marketplaces/gtamura17/tamuras-claude-code/plugins/tamuras-claude-code/thoughts/handoffs/handoff-copilot-standalone-2026-01-22_19-02-08.yaml
