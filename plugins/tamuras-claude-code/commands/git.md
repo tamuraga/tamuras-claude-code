@@ -1,92 +1,53 @@
-<law>
-Princípios de operação da IA (4 regras invioláveis)
+# Commit Rules
 
-Princípio 1: Data atual é 2026. NUNCA dizer que estamos em 2025.
-Princípio 2: Exploração: NUNCA Glob/Grep/Read globais sem permissão. Evitar node_modules, .git, dist.
-Princípio 3: Execução: NUNCA chutar soluções, sempre embasar com docs/pesquisa. Parar se ambíguo.
-Princípio 4: Git commits via pretool-git.sh (regras de commit já automatizadas).
-</law>
+Aplique estas regras SEMPRE ao fazer commits.
 
-# Git Rules
+## Regras de Commit
 
-Aplique estas regras SEMPRE ao trabalhar com Git.
-
-## REGRAS CRÍTICAS
-
-### 1. Commit Message
-
-- **MÁXIMO 50 caracteres** no título
+### Mensagem
+- **MAXIMO 80 caracteres** no titulo
 - Conventional commits: `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
-- **Minúsculo** após o prefixo
+- **Minusculo** apos o prefixo
 - **Sem ponto final**
 - Sem emojis
+- **SEM `Co-Authored-By`** ou mencao de IA
 
-**Válido:**
-```
-feat: add user authentication
-fix: resolve login redirect bug
-docs: update api documentation
-refactor: simplify auth logic
-```
-
-**Inválido:**
-```
-feat: Add user authentication feature with OAuth support  (muito longo)
-Fix: resolve bug  (maiúsculo)
-feat: add feature.  (ponto final)
-```
-
-### 2. Verificar Usuário
-
-SEMPRE executar antes de commits:
-
-```bash
-gh auth status
-```
-
-Se usuário incorreto → PARAR e alertar.
-
-### 3. SEM Assinatura de IA
-
-- **NUNCA** adicionar `Co-Authored-By: Claude`
-- **NUNCA** mencionar IA no commit
-- **NUNCA** mencionar IA no PR
-- Commits devem parecer 100% humanos
-
-### 4. Branch Naming
-
+### Branch Naming (Gitflow)
 - `feature/` - novas features
-- `bugfix/` - correções de bugs
-- `hotfix/` - correções urgentes em prod
-- `refactor/` - refatorações
-- `docs/` - documentação
+- `bugfix/` - correcoes de bugs
+- `hotfix/` - correcoes urgentes em prod
+- `release/` - preparacao de release
+- `refactor/` - refatoracoes
+- `docs/` - documentacao
 
-## Workflow
+### Organizacao por Arquivos
+- Commits **atomicos**: 1 commit por preocupacao logica
+- Se mudou 3 coisas diferentes, faca 3 commits separados
+- Agrupar por funcionalidade, nao por tipo de arquivo
 
-### Commit
+### Workflow
+1. `gh auth status` (verificar usuario)
+2. `git status` + `git diff` (entender mudancas)
+3. Separar mudancas em commits logicos se necessario
+4. Stage arquivos relacionados: `git add <files>`
+5. Commit semantico: `git commit -m "tipo: descricao"`
+6. **NUNCA** usar HEREDOC, `cat <<EOF`, ou mensagem multi-linha
 
-```bash
-# 1. Verificar usuário
-gh auth status
+### Exemplos validos
+- `feat: add user authentication with OAuth` (42 chars)
+- `fix: resolve login redirect loop on expired session` (52 chars)
+- `refactor: extract validation logic to shared utils` (51 chars)
+- `chore: update dependencies and fix peer warnings` (49 chars)
 
-# 2. Ver mudanças
-git status
-git diff
-
-# 3. Stage
-git add <files>
-
-# 4. Commit (SEM Co-Authored-By!)
-git commit -m "feat: short description"
-```
+### Exemplos INVALIDOS
+- `feat: Add X` (maiusculo apos prefixo)
+- `fix: bug.` (ponto final)
+- Mensagem > 80 chars
+- `feat: stuff` (vago demais)
 
 ### Pull Request
-
 ```bash
-# 1. Push
 git push -u origin <branch>
-
-# 2. Criar PR (SEM menção de IA)
 gh pr create --title "feat: description" --body "## Summary
 - [bullet points]
 
@@ -94,13 +55,11 @@ gh pr create --title "feat: description" --body "## Summary
 - [como testar]"
 ```
 
-## Validações
-
-Antes de cada commit:
+### Validacoes
 - [ ] `gh auth status` executado
-- [ ] Mensagem ≤ 50 caracteres
+- [ ] Mensagem <= 80 caracteres
 - [ ] Prefixo conventional commit
 - [ ] Sem ponto final
-- [ ] Minúsculo após prefixo
+- [ ] Minusculo apos prefixo
 - [ ] SEM Co-Authored-By
-- [ ] SEM menção de IA
+- [ ] SEM mencao de IA

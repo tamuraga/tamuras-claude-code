@@ -1,97 +1,43 @@
-# Git Rules
+# Commit Rules
 
-Aplique estas regras SEMPRE ao trabalhar com Git.
+Aplique estas regras SEMPRE ao fazer commits.
 
-## REGRAS CRÍTICAS
+## Regras de Commit
 
-### 1. Commit Message
-
-- **MÁXIMO 50 caracteres** no título
+### Mensagem
+- **MAXIMO 80 caracteres** no titulo
 - Conventional commits: `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
-- **Minúsculo** após o prefixo
+- **Minusculo** apos o prefixo
 - **Sem ponto final**
 - Sem emojis
+- **SEM `Co-Authored-By`** ou mencao de IA
 
-**Válido:**
-```
-feat: add user authentication
-fix: resolve login redirect bug
-docs: update api documentation
-refactor: simplify auth logic
-```
-
-**Inválido:**
-```
-feat: Add user authentication feature with OAuth support  (muito longo)
-Fix: resolve bug  (maiúsculo)
-feat: add feature.  (ponto final)
-```
-
-### 2. Verificar Usuário
-
-SEMPRE executar antes de commits:
-
-```bash
-gh auth status
-```
-
-Se usuário incorreto → PARAR e alertar.
-
-### 3. SEM Assinatura de IA
-
-- **NUNCA** adicionar `Co-Authored-By: Claude`
-- **NUNCA** mencionar IA no commit
-- **NUNCA** mencionar IA no PR
-- Commits devem parecer 100% humanos
-
-### 4. Branch Naming
-
+### Branch Naming (Gitflow)
 - `feature/` - novas features
-- `bugfix/` - correções de bugs
-- `hotfix/` - correções urgentes em prod
-- `refactor/` - refatorações
-- `docs/` - documentação
+- `bugfix/` - correcoes de bugs
+- `hotfix/` - correcoes urgentes em prod
+- `release/` - preparacao de release
+- `refactor/` - refatoracoes
+- `docs/` - documentacao
 
-## Workflow
+### Organizacao por Arquivos
+- Commits **atomicos**: 1 commit por preocupacao logica
+- Se mudou 3 coisas diferentes, faca 3 commits separados
+- Agrupar por funcionalidade, nao por tipo de arquivo
 
-### Commit
+### Workflow
+1. `gh auth status` (verificar usuario)
+2. `git status` + `git diff` (entender mudancas)
+3. Separar mudancas em commits logicos se necessario
+4. Stage arquivos relacionados: `git add <files>`
+5. Commit semantico: `git commit -m "tipo: descricao"`
+6. **NUNCA** usar HEREDOC, `cat <<EOF`, ou mensagem multi-linha
 
-```bash
-# 1. Verificar usuário
-gh auth status
-
-# 2. Ver mudanças
-git status
-git diff
-
-# 3. Stage
-git add <files>
-
-# 4. Commit (SEM Co-Authored-By!)
-git commit -m "feat: short description"
-```
-
-### Pull Request
-
-```bash
-# 1. Push
-git push -u origin <branch>
-
-# 2. Criar PR (SEM menção de IA)
-gh pr create --title "feat: description" --body "## Summary
-- [bullet points]
-
-## Test Plan
-- [como testar]"
-```
-
-## Validações
-
-Antes de cada commit:
+### Validacoes
 - [ ] `gh auth status` executado
-- [ ] Mensagem ≤ 50 caracteres
+- [ ] Mensagem <= 80 caracteres
 - [ ] Prefixo conventional commit
 - [ ] Sem ponto final
-- [ ] Minúsculo após prefixo
+- [ ] Minusculo apos prefixo
 - [ ] SEM Co-Authored-By
-- [ ] SEM menção de IA
+- [ ] SEM mencao de IA

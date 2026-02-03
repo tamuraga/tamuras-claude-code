@@ -1,8 +1,18 @@
 {
   "name": "tamuras-claude-code",
   "version": "1.0.0",
-  "description": "4 skills + 10 agents para workflow Next.js + Supabase + TypeScript",
+  "description": "2 skills + 9 agents para workflow Next.js + Supabase + TypeScript",
   "skills": "./skills/",
   "commands": "./commands/",
-  "agents": "./agents/"
+  "agents": [
+    "./agents/architecture.md",
+    "./agents/code-reviewer.md",
+    "./agents/codebase-explorer.md",
+    "./agents/context-cleaner.md",
+    "./agents/frontend.md",
+    "./agents/fullstack-builder.md",
+    "./agents/security.md",
+    "./agents/task-planner.md",
+    "./agents/visual-researcher.md"
+  ]
 }
