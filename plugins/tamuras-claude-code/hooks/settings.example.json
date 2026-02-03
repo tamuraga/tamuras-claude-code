@@ -14,6 +14,14 @@
       {
         "type": "command",
         "command": "HOOK_EVENT=SessionStart /path/to/tamuras-claude-code/hooks/session-ledger.sh"
+      },
+      {
+        "type": "command",
+        "command": "/path/to/tamuras-claude-code/hooks/inject-last-exploration.sh"
+      },
+      {
+        "type": "command",
+        "command": "/path/to/tamuras-claude-code/hooks/inject-memory.sh"
       }
     ],
 
@@ -21,6 +29,10 @@
       {
         "type": "command",
         "command": "/path/to/tamuras-claude-code/hooks/precompact-handoff.sh"
+      },
+      {
+        "type": "command",
+        "command": "/path/to/tamuras-claude-code/hooks/save-session-summary.sh"
       }
     ],
 
@@ -59,6 +71,13 @@
         "hooks": [{
           "type": "command",
           "command": "/path/to/tamuras-claude-code/hooks/pretool-playwright.sh \"$TOOL_INPUT\""
+        }]
+      },
+      {
+        "matcher": "mcp__",
+        "hooks": [{
+          "type": "command",
+          "command": "/path/to/tamuras-claude-code/hooks/pretool-mcp-limiter.sh \"$TOOL_NAME\""
         }]
       },
       {
