@@ -9,6 +9,7 @@
 - (nenhuma ainda)
 
 ## Arquivos Modificados
+- `/Users/eugtamura/.claude/settings.json` (05:27)
 - `/Users/eugtamura/.claude/CLAUDE.md` (05:24)
 - `/Users/eugtamura/Dev/tamuras-claude-code/plugins/tamuras-claude-code/hooks/session-ledger.sh` (05:23)
 - `/Users/eugtamura/.claude/plans/hashed-cooking-stardust.md` (05:22)

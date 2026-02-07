@@ -7,6 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #191 | 6:35 AM | ⚖️ | Enforce git agent usage via hook blocking | ~391 |
-| #17 | 4:29 AM | 🟣 | Integrated claude-mem MCP for context retrieval in codebase explorer | ~308 |
+| #81 | 5:48 AM | 🔵 | Plugin Manifest Structure Identified | ~291 |
 </claude-mem-context>

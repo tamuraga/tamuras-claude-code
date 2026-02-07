@@ -9,7 +9,7 @@
     {
       "name": "tamuras-claude-code",
       "source": "./plugins/tamuras-claude-code",
-      "description": "1 comando QA + 4 agentes (performance, security, responsive, visual-research)",
+      "description": "2 skills (dev, git) + 9 agents para workflow Next.js + Supabase + TypeScript",
       "version": "1.0.0"
     }
   ]
