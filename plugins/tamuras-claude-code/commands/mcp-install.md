@@ -1,5 +1,5 @@
 ---
-description: Instalar MCP servers com guia interativo
+description: Gerenciar MCP servers (instalar/desinstalar)
 allowed-tools: Bash(claude mcp:*), AskUserQuestion, Read, Grep, Glob
 ---
 
@@ -61,18 +61,27 @@ Mostre a lista de MCPs disponíveis organizada por categoria, de forma limpa e l
 - Se algum MCP já estiver instalado (veja seção "MCPs já instalados"), marque com ✓ ao lado do nome.
 - MCPs que requerem API keys ou tokens, indique com 🔑.
 
-### Passo 2 - Perguntar qual instalar
+### Passo 2 - Perguntar ação
+Use AskUserQuestion para perguntar o que o usuário quer fazer:
+- **Instalar** - Instalar um novo MCP
+- **Desinstalar** - Remover um MCP instalado
+
+---
+
+## Fluxo: Instalar
+
+### Passo 3a - Perguntar qual instalar
 Use AskUserQuestion para perguntar qual MCP o usuário quer instalar. Ofereça as opções mais populares (context7, playwright, supabase, github) como choices, e permita que o usuário escolha outros.
 
-### Passo 3 - Perguntar o escopo
+### Passo 4a - Perguntar o escopo
 Use AskUserQuestion para perguntar onde instalar:
 - **Global** (`-s user`): Disponível em todos os projetos
 - **Projeto** (`-s project`): Só no diretório atual (.mcp.json)
 
-### Passo 4 - Config de auth (se necessário)
-Se o MCP escolhido requer API key ou token (github, greptile, etc), informe o usuário qual variável de ambiente precisa configurar e como obter.
+### Passo 5a - Config de auth (se necessário)
+Se o MCP escolhido requer API key ou token (github, etc), informe o usuário qual variável de ambiente precisa configurar e como obter.
 
-### Passo 5 - Instalar
+### Passo 6a - Instalar
 Execute o comando correto baseado no tipo do MCP:
 
 Para MCPs tipo **npx**:
@@ -95,6 +104,25 @@ Para MCPs tipo **sse**:
 claude mcp add <nome> -s <escopo> --transport sse <url>
 ```
 
-### Passo 6 - Confirmar
-Execute `claude mcp list` para confirmar que foi instalado com sucesso.
-Pergunte se o usuário quer instalar mais algum MCP.
+---
+
+## Fluxo: Desinstalar
+
+### Passo 3b - Perguntar qual desinstalar
+Use AskUserQuestion listando APENAS os MCPs que estão instalados (da seção "MCPs já instalados") como choices.
+
+### Passo 4b - Perguntar o escopo
+Use AskUserQuestion para perguntar de onde remover:
+- **Global** (`-s user`)
+- **Projeto** (`-s project`)
+
+### Passo 5b - Desinstalar
+```
+claude mcp remove <nome> -s <escopo>
+```
+
+---
+
+## Finalizar
+Execute `claude mcp list` para confirmar o resultado.
+Pergunte se o usuário quer fazer mais alguma operação.
