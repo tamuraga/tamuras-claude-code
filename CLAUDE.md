@@ -1,153 +1,106 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Overview
-
 Plugin privado para Claude Code com agentes especializados para workflow Next.js + Supabase + TypeScript.
 
 ## Estrutura
 
 ```
-.claude-plugin/marketplace.json  # Configuracao do marketplace local
+.claude-plugin/marketplace.json  # marketplace local
 plugins/tamuras-claude-code/
-  agents/                        # Agentes especializados (.md)
-  hooks/                         # Scripts para hooks
+  agents/    # agentes especializados (.md)
+  hooks/     # scripts para hooks
+  skills/    # skills invocaveis (/nome)
 ```
 
-## Arquitetura do Plugin
+## Arquitetura
 
-**Marketplace local** em `.claude-plugin/marketplace.json` referencia plugins em `plugins/`.
+marketplace local em `.claude-plugin/marketplace.json` referencia plugins em `plugins/`.
 
-**Agentes** (`agents/*.md`):
-- Frontmatter com `name`, `description`, `tools`, `model`
-- Corpo define persona, workflow e output format
-- Invocados automaticamente via Task tool quando prompt do usuario match description
+agentes (`agents/*.md`): frontmatter com name, description, tools, model. corpo define persona, workflow e output format. invocados via Task tool quando prompt match description.
 
-## Agentes (18 total)
+## Skills (4)
 
-### Development (Build)
-| Nome | Trigger | Funcao | Modelo |
+| nome | invocacao | funcao |
+|------|-----------|--------|
+| dev | `/dev` | regras de desenvolvimento Next.js + Supabase |
+| git | `/git` | git workflow otimizado |
+| gemini-fetch | `/gemini-fetch` | fetch via Gemini API |
+| review-claudemd | `/review-claudemd` | analisa CLAUDE.md e sugere melhorias |
+
+## Agentes (10)
+
+### build
+| nome | trigger | funcao | modelo |
 |------|---------|--------|--------|
-| `fullstack-builder` | "build feature", "criar feature" | Implementa features end-to-end (DB → API → UI) | Opus |
-| `frontend` | "frontend", "componente", "ui" | Cria componentes React + Tailwind + shadcn | Sonnet |
+| fullstack-builder | "build feature", "criar feature" | end-to-end DB -> API -> UI | opus |
+| frontend | "frontend", "componente", "ui" | React + Tailwind + shadcn | sonnet |
 
-### Quality (Review)
-| Nome | Trigger | Funcao | Modelo |
+### review
+| nome | trigger | funcao | modelo |
 |------|---------|--------|--------|
-| `code-reviewer` | "review code", "revisar PR" | Review 5D: arch, security, perf, tests | Opus |
-| `code-reviewer-tester` | "review", "testes e2e", "smoke test" | Review + gera testes e2e/smoke | Sonnet |
-| `architecture` | "arquitetura", "estrutura" | Analisa e sugere melhorias arquiteturais | Sonnet |
+| code-reviewer | "review code", "revisar PR" | review 5D: arch, security, perf, tests | opus |
+| architecture | "arquitetura", "estrutura" | analisa e sugere melhorias arquiteturais | sonnet |
 
-### Exploration & Planning
-| Nome | Trigger | Funcao | Modelo |
+### exploration & planning
+| nome | trigger | funcao | modelo |
 |------|---------|--------|--------|
-| `codebase-explorer` | "explorar código", "mapear estrutura" | Explora codebase otimizado, usa Memento | Haiku |
-| `task-planner` | "quebrar tarefas", "task breakdown" | Quebra planos em tarefas executáveis | Sonnet |
+| codebase-explorer | "explorar codigo", "mapear estrutura" | explora codebase, usa Memento | haiku |
+| task-planner | "quebrar tarefas", "task breakdown" | quebra planos em tarefas executaveis | sonnet |
 
-### Git & DevOps
-| Nome | Trigger | Funcao | Modelo |
+### testing
+| nome | trigger | funcao | modelo |
 |------|---------|--------|--------|
-| `git` | "git", "commit", "push", "pr" | Git workflow (max 50 chars, sem Co-Authored-By) | Haiku |
-| `context-cleaner` | "limpar cache", "cleanup" | Limpa cache ~/.claude/ (debug, plans, todos) | Haiku |
+| test-planner | "plan tests", "mapear jornadas" | explora app, gera plano de testes | sonnet |
 
-### Auditoria
-| Nome | Trigger | Funcao |
-|------|---------|--------|
-| `performance` | "audit performance", "lighthouse" | Core Web Vitals, bundle size |
-| `security` | "security audit", "OWASP", "RLS" | OWASP Top 10, AI guardrails |
-| `responsive` | "check mobile", "responsividade" | Mobile-first, breakpoints |
-| `visual-research` | "pesquisa visual", "moodboard" | Moodboards, referências |
-| `visual-researcher` | "referências UI", "Dribbble" | Curadoria Dribbble/Behance/Figma |
+### audit
+| nome | trigger | funcao | modelo |
+|------|---------|--------|--------|
+| security | "security audit", "OWASP", "RLS" | OWASP Top 10, AI guardrails | sonnet |
+| visual-researcher | "referencias UI", "Dribbble" | curadoria Dribbble/Behance/Figma | sonnet |
 
-### Testing (Pipeline de 3 Agents)
-| Nome | Trigger | Funcao |
-|------|---------|--------|
-| `test-planner` | "plan tests", "mapear jornadas" | Explora app, gera plano em Markdown |
-| `test-runner` | "run tests", "executar testes" | Executa jornadas, valida UI + DB |
-| `test-healer` | "fix tests", "heal tests" | Auto-repara testes quebrados |
-
-### Fluxo Completo de Desenvolvimento
-```
-┌─────────────────────────────────────────────────────────────┐
-│  1. BUILD                                                   │
-│     fullstack-builder → Implementa feature                  │
-│     db-architect → Cria migrations                          │
-├─────────────────────────────────────────────────────────────┤
-│  2. REVIEW                                                  │
-│     code-reviewer → Review multi-dimensional                │
-│     security → Audit de seguranca + AI guardrails           │
-├─────────────────────────────────────────────────────────────┤
-│  3. TEST                                                    │
-│     test-planner → Gera plano                               │
-│     test-runner → Executa, valida UI + DB                   │
-│     test-healer → Auto-repara falhas                        │
-├─────────────────────────────────────────────────────────────┤
-│  4. OPTIMIZE                                                │
-│     performance → Audit de performance                      │
-│     prompt-optimizer → Melhora prompts/CLAUDE.md            │
-└─────────────────────────────────────────────────────────────┘
-```
+### devops
+| nome | trigger | funcao | modelo |
+|------|---------|--------|--------|
+| context-cleaner | "limpar cache", "cleanup" | limpa cache ~/.claude/ | haiku |
 
 ## Filosofia
 
-- Agentes sao **consultivos**: analisam, documentam, geram plano
-- Usuario **aprova** e executa fixes na thread principal
-- Outputs versionados em `audits/[tipo]/YYYY-MM-DD_HH-MM-SS.md`
-- Header obrigatorio: `**Gerado em:** YYYY-MM-DD HH:MM:SS`
-- **Pre-Context**: Agentes leem docs existentes antes de glob/grep
+- agentes sao consultivos: analisam, documentam, geram plano
+- usuario aprova e executa fixes na thread principal
+- outputs versionados em `audits/[tipo]/YYYY-MM-DD_HH-MM-SS.md`
+- HEADER OBRIGATORIO: `**Gerado em:** YYYY-MM-DD HH:MM:SS`
+- agentes leem docs existentes antes de glob/grep
 
-## Instalacao do Plugin
+## Hooks (14 scripts)
 
-```bash
-/plugin marketplace add /Users/eugtamura/Dev/tamuras-claude-code
-/plugin install tamuras-claude-code
-```
+### lifecycle
+| hook | evento | funcao |
+|------|--------|--------|
+| session-start.sh | SessionStart | injeta CLAUDE.md, README, docs/*, audits/*, git log |
+| prompt-submit.sh | UserPromptSubmit | lembrete de contexto + anti-exploracao |
+| subagent-start.sh | SubagentStart | injeta contexto em subagentes |
+| subagent-stop.sh | SubagentStop | consolida resultado de Explore em audits/ |
+| precompact.sh | PreCompact | salva handoff YAML antes de compactar |
+| session-end.sh | SessionEnd | ledger + handoff + atualiza docs |
+| notification.sh | Notification | notificacao macOS nativa |
 
-## Adicionando Novos Agentes
+### pretool (7 matchers)
+| hook | matcher | funcao |
+|------|---------|--------|
+| pretool-supabase.sh | `mcp__supabase__` | BLOQUEIA list_tables, SQL destrutivo; injeta regras RLS |
+| pretool-playwright.sh | `mcp__playwright__` | contexto fechado, minimiza acoes |
+| pretool-context7.sh | `mcp__context7__` | injeta versoes do package.json |
+| pretool-fetch.sh | `WebFetch\|WebSearch` | injeta data atual nas buscas |
+| pretool-explore.sh | `Task` | injeta contexto e foca subagente Explore |
+| pretool-bash-guard.sh | `Bash` | ⚠️ BLOQUEIA rm -rf, sudo, DROP, git push --force |
+| pretool-mcp-limiter.sh | `mcp__` | rate-limit MCPs pesados (browser) |
 
-Criar `plugins/tamuras-claude-code/agents/nome.md`:
-```markdown
----
-name: nome
-description: Triggers naturais do usuario
-tools: Bash, Glob, Grep, Read, Write
-model: sonnet
----
+ordem dos matchers: especificos primeiro (`mcp__supabase__`), genericos por ultimo (`mcp__`).
 
-Voce e um [Persona]. [Objetivo].
+## Novo Agente
 
-## Workflow
-1. ...
+criar `plugins/tamuras-claude-code/agents/nome.md` com frontmatter (name, description, tools, model) e corpo (persona, workflow, output format).
 
-## Output Format
-Gere arquivo em `audits/[tipo]/YYYY-MM-DD_HH-MM-SS.md`
-```
+## Otimizacao
 
-## Otimizacao de Tokens
-
-Agentes usam **Pre-Context** para reduzir glob/grep:
-
-### Projetos com docs/ estruturado (recomendado)
-Agentes leem automaticamente:
-1. `CLAUDE.md` do projeto (raiz ou .claude/)
-2. Tabela de referencias para `docs/`
-3. Docs relevantes (`docs/arquitetura/`, `docs/setup/`)
-
-### Projetos sem docs/ estruturado (fallback)
-Agentes tentam ler `docs/ai-context/project-structure.md` e `docs/ai-context/docs-overview.md` se existirem.
-
-### Hook opcional
-Em `settings.local.json` do projeto:
-```json
-{
-  "hooks": {
-    "SessionStart": [{
-      "hooks": [{
-        "type": "command",
-        "command": "/path/to/plugin/hooks/inject-context.sh"
-      }]
-    }]
-  }
-}
-```
+hooks injetam contexto automaticamente (CLAUDE.md, docs, audits, git log) para reduzir exploracoes. agentes recebem contexto no SubagentStart. ver `docs/TOKEN-OPTIMIZATION.md` para detalhes.
