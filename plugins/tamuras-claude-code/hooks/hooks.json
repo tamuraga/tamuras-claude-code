@@ -1,11 +1,12 @@
 {
+  "description": "Lifecycle hooks, pretool guards, and context injection for tamuras-claude-code",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/session-start.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"
           }
         ]
       }
@@ -15,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/prompt-submit.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/prompt-submit.sh"
           }
         ]
       }
@@ -26,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-supabase.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-supabase.sh"
           }
         ]
       },
@@ -35,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-playwright.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-playwright.sh"
           }
         ]
       },
@@ -44,7 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-context7.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-context7.sh"
           }
         ]
       },
@@ -53,7 +54,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-fetch.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-fetch.sh"
           }
         ]
       },
@@ -62,7 +63,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-explore.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-explore.sh"
           }
         ]
       },
@@ -71,7 +72,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-bash-guard.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-bash-guard.sh"
           }
         ]
       },
@@ -80,7 +81,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/pretool-mcp-limiter.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pretool-mcp-limiter.sh"
           }
         ]
       }
@@ -90,7 +91,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/notification.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/notification.sh"
           }
         ]
       }
@@ -100,7 +101,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/subagent-start.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/subagent-start.sh"
           }
         ]
       }
@@ -110,7 +111,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/subagent-stop.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/subagent-stop.sh"
           }
         ]
       }
@@ -120,7 +121,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/precompact.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/precompact.sh"
           }
         ]
       }
@@ -130,7 +131,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "plugins/tamuras-claude-code/hooks/session-end.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/session-end.sh"
           }
         ]
       }
