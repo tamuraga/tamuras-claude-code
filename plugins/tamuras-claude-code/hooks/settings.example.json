@@ -1,118 +1,139 @@
 {
-  "$schema": "https://claude.ai/code/settings.schema.json",
-  "$comment": "Exemplo de configuração para usar os hooks do tamuras-claude-code",
-
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "type": "command",
-        "command": "/path/to/tamuras-claude-code/hooks/statusline.sh"
-      }
-    ],
-
     "SessionStart": [
       {
-        "type": "command",
-        "command": "HOOK_EVENT=SessionStart /path/to/tamuras-claude-code/hooks/session-ledger.sh"
-      },
-      {
-        "type": "command",
-        "command": "/path/to/tamuras-claude-code/hooks/inject-last-exploration.sh"
-      },
-      {
-        "type": "command",
-        "command": "/path/to/tamuras-claude-code/hooks/inject-memory.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/session-start.sh"
+          }
+        ]
       }
     ],
-
-    "PreCompact": [
+    "UserPromptSubmit": [
       {
-        "type": "command",
-        "command": "/path/to/tamuras-claude-code/hooks/precompact-handoff.sh"
-      },
-      {
-        "type": "command",
-        "command": "/path/to/tamuras-claude-code/hooks/save-session-summary.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/prompt-submit.sh"
+          }
+        ]
       }
     ],
-
     "PreToolUse": [
       {
-        "matcher": "Edit|Write",
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-typescript.sh \"$TOOL_INPUT\""
-        }]
-      },
-      {
         "matcher": "mcp__supabase__",
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-supabase.sh"
-        }]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-git.sh \"$TOOL_INPUT\""
-        }]
-      },
-      {
-        "matcher": "WebFetch|WebSearch",
-        "once": true,
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-fetch.sh"
-        }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-supabase.sh"
+          }
+        ]
       },
       {
         "matcher": "mcp__playwright__",
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-playwright.sh \"$TOOL_INPUT\""
-        }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-playwright.sh"
+          }
+        ]
       },
       {
-        "matcher": "mcp__",
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-mcp-limiter.sh \"$TOOL_NAME\""
-        }]
+        "matcher": "mcp__context7__",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-context7.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-fetch.sh"
+          }
+        ]
       },
       {
         "matcher": "Task",
-        "hooks": [{
-          "type": "command",
-          "command": "/path/to/tamuras-claude-code/hooks/pretool-explorer.sh \"$TOOL_INPUT\""
-        }]
-      }
-    ],
-
-    "PostToolUse": [
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-explore.sh"
+          }
+        ]
+      },
       {
-        "matcher": "Edit|Write",
-        "hooks": [{
-          "type": "command",
-          "command": "HOOK_EVENT=PostToolUse /path/to/tamuras-claude-code/hooks/session-ledger.sh \"$TOOL_INPUT\""
-        }]
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-bash-guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/pretool-mcp-limiter.sh"
+          }
+        ]
       }
-    ]
-  },
-
-  "permissions": {
-    "allow": [
-      "Bash(npm *)",
-      "Bash(git *)",
-      "Bash(gh *)",
-      "Bash(npx *)",
-      "Bash(pnpm *)",
-      "Bash(bun *)"
     ],
-    "deny": [
-      "Bash(rm -rf /)",
-      "Bash(* --force *)",
-      "Bash(sudo *)"
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/notification.sh"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/subagent-start.sh"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/subagent-stop.sh"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/precompact.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/tamuras-claude-code/hooks/session-end.sh"
+          }
+        ]
+      }
     ]
   }
 }
